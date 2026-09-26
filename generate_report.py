@@ -44,7 +44,6 @@ stats_sorted = sorted(stats, key=lambda x: x["distance"], reverse=True)
 rows = "\n".join(
     f"<tr><td>{idx + 1}</td><td>{s['caption']}</td><td>{s['distance']} km</td></tr>"
     for idx, s in enumerate(stats_sorted)
-    if s["distance"] > 0
 )
 
 html = f"""<!DOCTYPE html>
