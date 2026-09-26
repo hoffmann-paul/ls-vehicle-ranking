@@ -1,0 +1,35 @@
+name: Update Rangliste
+
+on:
+  schedule:
+    - cron: "*/7 * * * *"   
+  workflow_dispatch: {}      
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install requests beautifulsoup4
+
+      - name: Generate report
+        env:
+          LSP_USERNAME: ${{ secrets.LSP_USERNAME }}
+          LSP_PASSWORD: ${{ secrets.LSP_PASSWORD }}
+        run: python generate_report.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add docs/index.html
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update Rangliste"
+          git push
