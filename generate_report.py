@@ -43,13 +43,13 @@ for i in vehicles:
 stats_sorted = sorted(stats, key=lambda x: x["distance"], reverse=True)
 
 fms_summary = "\n".join(
-    f"""<p>FMS 1: {str(vehicle_fms_summary["1"])}</p>
-    <p>FMS 2: {str(vehicle_fms_summary["2"])}</p>
-    <p>FMS 3: {str(vehicle_fms_summary["3"])}</p>
-    <p>FMS 4: {str(vehicle_fms_summary["4"])}</p>
-    <p>FMS 5: {str(vehicle_fms_summary["5"])}</p>
-    <p>FMS 6: {str(vehicle_fms_summary["6"])}</p>
-    <p>FMS 7: {str(vehicle_fms_summary["7"])}</p>
+    f"""<p>FMS 1: {vehicle_fms_summary.get("1", 0)}</p>
+    <p>FMS 2: {vehicle_fms_summary.get("2", 0)}</p>
+    <p>FMS 3: {vehicle_fms_summary.get("3", 0)}</p>
+    <p>FMS 4: {vehicle_fms_summary.get("4", 0)}</p>
+    <p>FMS 5: {vehicle_fms_summary.get("5", 0)}</p>
+    <p>FMS 6: {vehicle_fms_summary.get("6", 0)}</p>
+    <p>FMS 7: {vehicle_fms_summary.get("7", 0)}</p>
     """
 )
 
