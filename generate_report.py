@@ -24,8 +24,10 @@ session.post("https://www.leitstellenspiel.de/users/sign_in", data={
 # 3. API-Endpoint abrufen
 response = session.get("https://www.leitstellenspiel.de/api/vehicles/")
 missons = session.get("https://www.leitstellenspiel.de/api/v1/vehicle_distances")
+vehicles_response = session.get("https://www.leitstellenspiel.de/api/vehicle_states")
 distances = missons.json()
 vehicles = response.json()
+vehicle_fms_summary = vehicles_response.json()
 
 stats = []
 
@@ -39,6 +41,17 @@ for i in vehicles:
             stats.append(entry)
 
 stats_sorted = sorted(stats, key=lambda x: x["distance"], reverse=True)
+
+fms_summary = "\n".join(
+    f"""<p>FMS 1: {str(vehicle_fms_summary["1"])}</p>
+    <p>FMS 2: {str(vehicle_fms_summary["2"])}</p>
+    <p>FMS 3: {str(vehicle_fms_summary["3"])}</p>
+    <p>FMS 4: {str(vehicle_fms_summary["4"])}</p>
+    <p>FMS 5: {str(vehicle_fms_summary["5"])}</p>
+    <p>FMS 6: {str(vehicle_fms_summary["6"])}</p>
+    <p>FMS 7: {str(vehicle_fms_summary["7"])}</p>
+    """
+)
 
 # 4. HTML statt print() erzeugen, damit GitHub Pages es anzeigen kann
 rows = "\n".join(
@@ -62,6 +75,8 @@ html = f"""<!DOCTYPE html>
 </style>
 </head>
 <body>
+<h1>FMS-Status Zusammenfassung</h1>
+{fms_summary}
 <h1>Fahrzeug-Rangliste (nach gefahrenen km)</h1>
 <table>
 <tr><th>#</th><th>Fahrzeug</th><th>Distanz</th></tr>
